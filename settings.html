@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusOS AI - Settings</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+display:flex;
+}
+
+.sidebar{
+width:260px;
+height:100vh;
+background:#111827;
+padding:25px;
+position:fixed;
+}
+
+.logo{
+font-size:28px;
+font-weight:700;
+color:#38bdf8;
+margin-bottom:40px;
+}
+
+.sidebar ul{
+list-style:none;
+}
+
+.sidebar li{
+margin:18px 0;
+}
+
+.sidebar a{
+text-decoration:none;
+color:white;
+}
+
+.sidebar a:hover{
+color:#38bdf8;
+}
+
+.main{
+margin-left:260px;
+padding:30px;
+width:100%;
+}
+
+.settings-card{
+background:#1e293b;
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.settings-card h2{
+margin-bottom:15px;
+}
+
+.setting{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 0;
+border-bottom:1px solid #334155;
+}
+
+.switch{
+position:relative;
+display:inline-block;
+width:60px;
+height:34px;
+}
+
+.switch input{
+opacity:0;
+width:0;
+height:0;
+}
+
+.slider{
+position:absolute;
+cursor:pointer;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#64748b;
+transition:.4s;
+border-radius:34px;
+}
+
+.slider:before{
+position:absolute;
+content:"";
+height:26px;
+width:26px;
+left:4px;
+bottom:4px;
+background:white;
+transition:.4s;
+border-radius:50%;
+}
+
+input:checked + .slider{
+background:#38bdf8;
+}
+
+input:checked + .slider:before{
+transform:translateX(26px);
+}
+
+.btn{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+.save-btn{
+background:#38bdf8;
+color:black;
+}
+
+.reset-btn{
+background:#ef4444;
+color:white;
+}
+
+@media(max-width:900px){
+
+.sidebar{
+display:none;
+}
+
+.main{
+margin-left:0;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+
+<div class="logo">NexusOS AI</div>
+
+<ul>
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="analytics.html">📊 Analytics</a></li>
+<li><a href="tasks.html">📋 Tasks</a></li>
+<li><a href="goals.html">🎯 Goals</a></li>
+<li><a href="profile.html">👤 Profile</a></li>
+<li><a href="settings.html">⚙ Settings</a></li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<h1 style="margin-bottom:25px;">⚙ Settings</h1>
+
+<div class="settings-card">
+
+<h2>Appearance</h2>
+
+<div class="setting">
+<span>Dark Mode</span>
+
+<label class="switch">
+<input type="checkbox" id="darkMode" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+</div>
+
+<div class="settings-card">
+
+<h2>Notifications</h2>
+
+<div class="setting">
+
+<span>Email Notifications</span>
+
+<label class="switch">
+<input type="checkbox" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="setting">
+
+<span>Study Reminders</span>
+
+<label class="switch">
+<input type="checkbox" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="setting">
+
+<span>Achievement Alerts</span>
+
+<label class="switch">
+<input type="checkbox">
+<span class="slider"></span>
+</label>
+
+</div>
+
+</div>
+
+<div class="settings-card">
+
+<h2>Account</h2>
+
+<div class="setting">
+<span>Backup Data</span>
+<button class="btn save-btn">Backup</button>
+</div>
+
+<div class="setting">
+<span>Export Progress Report</span>
+<button class="btn save-btn">Export</button>
+</div>
+
+<div class="setting">
+<span>Reset All Data</span>
+<button class="btn reset-btn" onclick="resetData()">Reset</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function resetData(){
+
+let confirmReset = confirm(
+"Are you sure you want to reset all progress?"
+);
+
+if(confirmReset){
+
+localStorage.clear();
+
+alert("All progress data has been reset.");
+
+}
+
+}
+
+</script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusOS AI - Tasks</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+display:flex;
+}
+
+.sidebar{
+width:260px;
+height:100vh;
+background:#111827;
+padding:25px;
+position:fixed;
+}
+
+.logo{
+font-size:28px;
+font-weight:700;
+color:#38bdf8;
+margin-bottom:40px;
+}
+
+.sidebar ul{
+list-style:none;
+}
+
+.sidebar li{
+margin:18px 0;
+}
+
+.sidebar a{
+text-decoration:none;
+color:white;
+}
+
+.sidebar a:hover{
+color:#38bdf8;
+}
+
+.main{
+margin-left:260px;
+padding:30px;
+width:100%;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.task-input{
+display:flex;
+gap:10px;
+margin-bottom:25px;
+}
+
+.task-input input{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+}
+
+.task-input button{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+background:#38bdf8;
+font-weight:600;
+cursor:pointer;
+}
+
+.board{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.column{
+background:#1e293b;
+padding:20px;
+border-radius:20px;
+min-height:500px;
+}
+
+.column h2{
+margin-bottom:20px;
+}
+
+.task{
+background:#334155;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+cursor:grab;
+}
+
+.task:hover{
+transform:scale(1.02);
+}
+
+@media(max-width:900px){
+
+.sidebar{
+display:none;
+}
+
+.main{
+margin-left:0;
+}
+
+.board{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+
+<div class="logo">NexusOS AI</div>
+
+<ul>
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="analytics.html">📊 Analytics</a></li>
+<li><a href="tasks.html">📋 Tasks</a></li>
+<li><a href="goals.html">🎯 Goals</a></li>
+<li><a href="profile.html">👤 Profile</a></li>
+<li><a href="settings.html">⚙ Settings</a></li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+<h1>📋 Task Board</h1>
+</div>
+
+<div class="task-input">
+
+<input
+type="text"
+id="taskInput"
+placeholder="Enter a new task..."
+>
+
+<button onclick="addTask()">
+Add Task
+</button>
+
+</div>
+
+<div class="board">
+
+<div
+class="column"
+id="todo"
+ondrop="drop(event)"
+ondragover="allowDrop(event)"
+>
+<h2>📝 To Do</h2>
+</div>
+
+<div
+class="column"
+id="progress"
+ondrop="drop(event)"
+ondragover="allowDrop(event)"
+>
+<h2>🚀 In Progress</h2>
+</div>
+
+<div
+class="column"
+id="done"
+ondrop="drop(event)"
+ondragover="allowDrop(event)"
+>
+<h2>✅ Completed</h2>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let counter = 0;
+
+function addTask(){
+
+let input = document.getElementById("taskInput");
+
+if(input.value.trim()==="") return;
+
+let task = document.createElement("div");
+
+task.className="task";
+task.id="task"+counter++;
+task.draggable=true;
+
+task.ondragstart=function(e){
+e.dataTransfer.setData("text", task.id);
+};
+
+task.innerHTML=input.value;
+
+document.getElementById("todo").appendChild(task);
+
+input.value="";
+
+saveBoard();
+}
+
+function allowDrop(e){
+e.preventDefault();
+}
+
+function drop(e){
+
+e.preventDefault();
+
+let data=e.dataTransfer.getData("text");
+
+let task=document.getElementById(data);
+
+e.currentTarget.appendChild(task);
+
+saveBoard();
+}
+
+function saveBoard(){
+
+localStorage.setItem(
+"taskBoard",
+document.querySelector(".board").innerHTML
+);
+
+}
+
+window.onload=function(){
+
+let saved=localStorage.getItem("taskBoard");
+
+if(saved){
+
+document.querySelector(".board").innerHTML=saved;
+
+document.querySelectorAll(".task").forEach(task=>{
+
+task.draggable=true;
+
+task.ondragstart=function(e){
+
+e.dataTransfer.setData("text", task.id);
+
+};
+
+});
+
+}
+
+};
+
+</script>
+<script src="script.js"></script>
+</body>
+</html>
